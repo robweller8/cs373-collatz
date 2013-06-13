@@ -39,16 +39,46 @@ def collatz_eval (i, j) :
     """
     assert i > 0
     assert j > 0
-    max = 2
+
+    metacache = [1,2,8,3,6,9,17,4,20,7]
+    max = 1
     if i <= j :
+        k = j / 2
+        if k > i :
+            i = k
+
         for n in range(i,j):
-            c = 1
+            c = 0
             while n > 1 :
-                if (n % 2) == 0 :
-                    n = (n / 2)
-                else :
-                    n = (3 * n) + 1
-                c += 1
+                if n < 10 :
+                    c += metacache[n-1]
+                    n = 1
+                else:
+                    if (n % 2) == 0 :
+                        n = (n / 2)
+                        c += 1
+                    else :
+                        n = ((3 * n) + 1)/2
+                        c += 2
+            if c > max :
+                max = c;
+    else :
+        k = i / 2
+        if k > j :
+            j = k
+        for n in range(j,i):
+            c = 0
+            while n > 1 :
+                if n < 10 :
+                    c += metacache[n-1]
+                    n = 1
+                else:
+                    if (n % 2) == 0 :
+                        n = (n / 2)
+                        c += 1
+                    else :
+                        n = ((3 * n) + 1)/2
+                        c += 2
             if c > max :
                 max = c;
 
@@ -82,3 +112,5 @@ def collatz_solve (r, w) :
     while collatz_read(r, a) :
         v = collatz_eval(a[0], a[1])
         collatz_print(w, a[0], a[1], v)
+
+
